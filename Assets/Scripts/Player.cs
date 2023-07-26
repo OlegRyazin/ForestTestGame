@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] private DynamicJoystick joystick;
 
     public static BalanceInfo balanceInfo;
-    public static int level = 1;
+    //public static int level = 1;
     public static int damage;
     public static int Wood
     {
@@ -60,27 +60,59 @@ public class Player : MonoBehaviour
         rb.velocity = directionVector * speed;
     }
 
-    public void LevelUp()
+    public void SkinChange(int skinID)
     {
-        switch(level)
+        foreach(GameObject item in ArmorAndAxes)
         {
+            item.SetActive(false);
+        }
+
+        switch(skinID)
+        {
+            case 0:
+                ArmorAndAxes[0].SetActive(true);
+                ArmorAndAxes[1].SetActive(true);
+                damage = balanceInfo.axe1_damage;
+                break;
             case 1:
-                level++;
-                Wood -= balanceInfo.level2_Price;
-                damage = balanceInfo.axe2_damage;
-                ArmorAndAxes[0].SetActive(false);
-                ArmorAndAxes[1].SetActive(false);
                 ArmorAndAxes[2].SetActive(true);
-                ArmorAndAxes[3].SetActive(true);
+                ArmorAndAxes[1].SetActive(true);
+                damage = balanceInfo.axe1_damage;
                 break;
             case 2:
-                level++;
-                Wood -= balanceInfo.level3_Price;
-                damage = balanceInfo.axe3_damage;
-                ArmorAndAxes[2].SetActive(false);
-                ArmorAndAxes[3].SetActive(false);
                 ArmorAndAxes[4].SetActive(true);
-                ArmorAndAxes[5].SetActive(true);               
+                ArmorAndAxes[1].SetActive(true);
+                damage = balanceInfo.axe1_damage;
+                break;
+            case 3:
+                ArmorAndAxes[0].SetActive(true);
+                ArmorAndAxes[3].SetActive(true);
+                damage = balanceInfo.axe2_damage;
+                break;
+            case 4:
+                ArmorAndAxes[2].SetActive(true);
+                ArmorAndAxes[3].SetActive(true);
+                damage = balanceInfo.axe2_damage;
+                break;
+            case 5:
+                ArmorAndAxes[4].SetActive(true);
+                ArmorAndAxes[3].SetActive(true);
+                damage = balanceInfo.axe2_damage;
+                break;
+            case 6:
+                ArmorAndAxes[0].SetActive(true);
+                ArmorAndAxes[5].SetActive(true);
+                damage = balanceInfo.axe3_damage;
+                break;
+            case 7:
+                ArmorAndAxes[2].SetActive(true);
+                ArmorAndAxes[5].SetActive(true);
+                damage = balanceInfo.axe3_damage;
+                break;
+            case 8:
+                ArmorAndAxes[4].SetActive(true);
+                ArmorAndAxes[5].SetActive(true);
+                damage = balanceInfo.axe3_damage;
                 break;
             default: break;
         }

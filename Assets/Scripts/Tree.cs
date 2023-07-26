@@ -6,11 +6,11 @@ using UnityEngine.UIElements;
 
 public class Tree : MonoBehaviour
 {
-    public GameObject player;
-    public GameObject liveTree;
-    public GameObject dieTree;
+    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject liveTree;
+    [SerializeField] private GameObject dieTree;
 
-    public ParticleSystem particleSystem;
+    [SerializeField] private ParticleSystem particleSystem;
 
     private Animation animation;
     private Collider liveTreeCollider;

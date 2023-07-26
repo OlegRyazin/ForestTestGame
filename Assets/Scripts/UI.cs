@@ -6,9 +6,11 @@ using UnityEngine.UI;
 
 public class UI : MonoBehaviour
 {
-    public Text numberOfLogs_Text;
-    public Button upgrade_Button;
-    public Image numberOfLogs_Image;
+    [SerializeField] private Text numberOfLogs_Text;
+    [SerializeField] private Button upgrade_Button;
+    [SerializeField] private Image numberOfLogs_Image;
+    [SerializeField] private GameObject shop;
+    [SerializeField] private Player player;
 
     public static Action UI_Wood_Update;
 
@@ -17,6 +19,8 @@ public class UI : MonoBehaviour
 
     private static AudioSource upgrade_Button_AudioSource;
     private static AudioSource numberOfLogs_Image_AudioSource;
+
+    private bool isShopOpen = false;
 
     private void Awake()
     {
@@ -29,8 +33,6 @@ public class UI : MonoBehaviour
         numberOfLogs_Image_Animation = numberOfLogs_Image.GetComponent<Animation>();
         upgrade_Button_AudioSource = upgrade_Button.GetComponent<AudioSource>();
         numberOfLogs_Image_AudioSource = numberOfLogs_Image.GetComponent<AudioSource>();
-        upgrade_Button.gameObject.SetActive(false);
-
     }
 
     public void Upgrade_ButtonAnimPlay()
@@ -48,31 +50,21 @@ public class UI : MonoBehaviour
     public IEnumerator WaitEndAnimation()
     {
         yield return new WaitForSeconds(0.3f);
-        upgrade_Button.gameObject.SetActive(false);
     }
 
     private void numberOfLogs_Update()
     {
-        bool showUpButton = false;
-        string str = Player.Wood.ToString();
-        switch(Player.level)
-        {
-            case 1:
-                str += "/" + Player.balanceInfo.level2_Price;
-                if (Player.Wood >= Player.balanceInfo.level2_Price) showUpButton = true;
-                break;
-            case 2:
-                str += "/" + Player.balanceInfo.level3_Price;
-                if (Player.Wood >= Player.balanceInfo.level3_Price) showUpButton = true;
-                break;
-            default:
-                break;
-        }
-        numberOfLogs_Text.text = str;
+        numberOfLogs_Text.text = Player.Wood.ToString();
+    }
 
+    public void OpenAndCloseShopButton()
+    {
+        shop.SetActive(!isShopOpen);
+        isShopOpen = !isShopOpen;
+    }
 
-        if (showUpButton) upgrade_Button.gameObject.SetActive(true);
-        else StartCoroutine(WaitEndAnimation());
-
+    public void ChangeSkinButtons(int skinID)
+    {
+        player.SkinChange(skinID);
     }
 }
